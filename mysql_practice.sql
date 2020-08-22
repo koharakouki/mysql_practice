@@ -14,6 +14,9 @@ mysql>
 これで起動完了
 
 
+★データベースを作成する
+
+
 ●データベースを作成する--------------------------------------------------------
 
 $ CREATE DATABASE データベース名;
@@ -157,6 +160,90 @@ $ SELECT * FROM tb1;
 
 
 
+★テーブルのカラム構造の変更------------------------------------------------------
+
+●カラムのデータ型を変更する
+
+$ ALTER TABLE テーブル名 MODIFY カラム名 データ型;
+
+$ ALTER TABLE tb1C MODIFY nama VARCHAR(100);
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+$ DESC tb1C;
+
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| bang  | varchar(10)  | YES  |     | NULL    |       |
+| nama  | varchar(100) | YES  |     | NULL    |       |
+| tosi  | int(11)      | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+
+●カラムを追加する
+
+$ ALTER TABLE テーブル名 ADD カラム名 データ型;
+
+$ ALTER TABLE tb1C ADD umare DATETIME;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+$ DESC tb1C;
+
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| bang  | varchar(10)  | YES  |     | NULL    |       |
+| nama  | varchar(100) | YES  |     | NULL    |       |
+| tosi  | int(11)      | YES  |     | NULL    |       |
+| umare | datetime     | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec
+
+
+$ ALTER TABLE tb1C ADD umare DATETIME FIRST;
+のように最後にFIRSTをつけると先頭に追加される。
+
+$ ALTER TABLE tb1C ADD umare DATETIME AFTER bang;
+のように書くと、bangの後に追加できる。
+
+
+●カラム順の変更
+
+$ ALTER TABLE tb1C MODIFY umare DATETIME FIRST;
+
+$ DESC tb1C;
+
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| umare | datetime     | YES  |     | NULL    |       |
+| bang  | varchar(10)  | YES  |     | NULL    |       |
+| nama  | varchar(100) | YES  |     | NULL    |       |
+| tosi  | int(11)      | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
 
 
 
+●カラム名を含めてカラムのデータ型、位置を変更する
+
+$ ALTER TABLE テーブル名 CHANGE 変更前カラム名 変更後カラム名 変更後データ型;
+
+$ ALTER TABLE tb1C CHANGE umare seinen DATE;
+Query OK, 6 rows affected (0.03 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+$ DESC tb1C;
+
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| seinen | date         | YES  |     | NULL    |       |
+| bang   | varchar(10)  | YES  |     | NULL    |       |
+| nama   | varchar(100) | YES  |     | NULL    |       |
+| tosi   | int(11)      | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
