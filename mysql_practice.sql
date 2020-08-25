@@ -402,11 +402,117 @@ Records: 0  Duplicates: 0  Warnings: 0
 
 
 
+★テーブルやレコードをコピー・削除する-------------------------------------------------------
+
+●テーブルのカラム構造とレコードをコピーしてテーブルを作成-------------------------------------------
+
+$ CREATE TABLE 新規テーブル名 SELECT * FROM 元となるテーブル名;
+
+$ CREATE TABLE tb1_bk SELECT * FROM tb1;
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+$ SELECT * FROM tb1_bk;
+
++------+--------+------+
+| bang | nama   | tosi |
++------+--------+------+
+| A101 | 佐藤   |   40 |
+| A102 | 高橋   |   28 |
+| A103 | 中川   |   20 |
+| A104 | 渡辺   |   23 |
+| A105 | 西沢   |   35 |
++------+--------+------+
+5 rows in set (0.00 sec)
 
 
+●テーブルのカラム構造のみコピー------------------------------------------
+
+$ CREATE TABLE 新規テーブル名 LIKE 元となるテーブル名;
+
+$ CREATE TABLE tb1_bkc LIKE tb1;
+Query OK, 0 rows affected (0.03 sec)
+
+$ DESC tb1_bkc;
+
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| bang  | varchar(10) | YES  |     | NULL    |       |
+| nama  | varchar(10) | YES  |     | NULL    |       |
+| tosi  | int(11)     | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
 
 
+●他のテーブルのレコードをコピー------------------------------------------
 
+$ INSERT INTO テーブル名 SELECT * FROM 元となるテーブル名;
+
+$ INSERT INTO tb1_bkc SELECT * FROM tb1;
+Query OK, 5 rows affected (0.00 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+$ SELECT * FROM tb1_bkc;
+
++------+--------+------+
+| bang | nama   | tosi |
++------+--------+------+
+| A101 | 佐藤   |   40 |
+| A102 | 高橋   |   28 |
+| A103 | 中川   |   20 |
+| A104 | 渡辺   |   23 |
+| A105 | 西沢   |   35 |
++------+--------+------+
+5 rows in set (0.00 sec)
+
+
+●テーブルを削除する---------------------------------------------------
+
+$ DROP TABLE テーブル名;
+
+$ DROP TABLE tb1A;
+Query OK, 0 rows affected (0.01 sec)
+
+$ SHOW TABLES;
+
++---------------+
+| Tables_in_db1 |
++---------------+
+| itii          |
+| renzoku       |
+| tb1           |
+| tb1B          |
+| tb1C          |
+| tb1D          |
+| tb1E          |
+| tb1F          |
+| tb1G          |
+| tb1H          |
+| tb1I          |
+| tb1J          |
+| tb1K          |
+| tb1_bk        |
+| tb1_bkc       |
+| uniq          |
++---------------+
+16 rows in set (0.00 sec)
+
+
+●データベースの削除--------------------------------------------------
+
+$ DROP DATABASE データベース名;
+
+
+●レコードの丸ごと削除--------------------------------------------------
+
+$ DELETE FROM テーブル名;
+
+$ DELETE FROM tb1_bk;
+Query OK, 5 rows affected (0.00 sec)
+
+$ SELECT * FROM tb1_bk;
+Empty set (0.00 sec)
 MySQLの特徴------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ●VARCHAR(10)と指定しているのに10文字以上のデータを入力した場合、エラーにならず10文字を超えるデータは勝手に削除される。
 
