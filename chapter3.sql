@@ -729,3 +729,4 @@ $ SELECT bang, AVG(uria)
 -- +------+-----------+
 -- 3 rows in set (0.00 sec)
 
+
